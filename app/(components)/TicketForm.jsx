@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function TicketForm({ ticket }) {
@@ -42,8 +42,8 @@ export default function TicketForm({ ticket }) {
 
         if (EDITMODE) {
             const res = await fetch(`/api/Tickets/${ticket._id}`, {
-                method: "PUT",
-                body: JSON.stringify({ formData }),
+                "method": "PUT",
+                "body": JSON.stringify({ formData }),
                 //@ts-ignore
                 "Content-Type": "application/json",
             });
@@ -52,8 +52,8 @@ export default function TicketForm({ ticket }) {
             }
         } else {
             const res = await fetch("/api/Tickets", {
-                method: "POST",
-                body: JSON.stringify({ formData }),
+                "method": "POST",
+                "body": JSON.stringify({ formData }),
                 //@ts-ignore
                 "Content-Type": "application/json",
             });
@@ -62,7 +62,7 @@ export default function TicketForm({ ticket }) {
             }
         }
 
-            
+        redirect("/");
         router.refresh();
         router.push("/");
     }
@@ -166,7 +166,11 @@ export default function TicketForm({ ticket }) {
                     onChange={handleChange}
                 />
                 <label>Status</label>
-                <select name="status" value={formData.status} onChange={handleChange}>
+                <select
+                    name="status"
+                    value={formData.status}
+                    onChange={handleChange}
+                >
                     <option value="not started">Not Started</option>
                     <option value="started">Started</option>
                     <option value="done">Done</option>
